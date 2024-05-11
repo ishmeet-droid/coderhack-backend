@@ -5,7 +5,7 @@ import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.coderhack.constants.Badges;
+import com.coderhack.coderhackbackend.constants.Badges;
 
 import lombok.NonNull;
 

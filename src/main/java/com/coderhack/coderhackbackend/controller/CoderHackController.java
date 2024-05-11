@@ -1,4 +1,4 @@
-package com.coderhack.controller;
+package com.coderhack.coderhackbackend.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 

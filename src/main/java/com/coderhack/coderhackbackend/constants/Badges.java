@@ -1,4 +1,4 @@
-package com.coderhack.constants;
+package com.coderhack.coderhackbackend.constants;
 
 public enum Badges{
  
