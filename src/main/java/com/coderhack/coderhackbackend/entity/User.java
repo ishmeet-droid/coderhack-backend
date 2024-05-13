@@ -10,7 +10,7 @@ import com.coderhack.coderhackbackend.constants.Badges;
 import lombok.NonNull;
 
 @Document(collection = "coding_users")
-public record User(@Id Long id, @NonNull String userName, double score, Set<Badges> badges) {    
+public record User(@Id String id, @NonNull String userName, double score, Set<Badges> badges) {    
 }
 
 

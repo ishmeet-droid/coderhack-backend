@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "userName": "x@singh",
+        "score": 1001.0,
+        "badges": ["CODE_CHAMP"]
+    },
+    {
+        "id": 2,
+        "userName": "y@singh",
+        "score": 1001.0,
+        "badges": ["CODE_CHAMP","CODE_MASTER"]
+    }
+]
