@@ -43,12 +43,13 @@ public class UserService {
         }
         User user = userRepository.findById(userId).get();
         user.setScore(newScore);
-       // user.getBadges().clear(); // Clear existing badges before re-awarding
+        user.getBadges().clear(); // Clear existing badges before re-awarding
         user.awardBadges();
         return userRepository.save(user);
     }
 
     public void deleteUser(String userId) {
+
         userRepository.deleteById(userId);
     }
     

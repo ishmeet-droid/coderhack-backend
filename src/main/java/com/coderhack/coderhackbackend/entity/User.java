@@ -36,9 +36,15 @@ public class User {
 
     public void awardBadges() {
         if (score >= 60) {
-            badges.add(Badges.CODE_MASTER);
-        } else if (score >= 30) {
+            
+            badges.add(Badges.CODE_NINJA);
             badges.add(Badges.CODE_CHAMP);
+            badges.add(Badges.CODE_MASTER);
+        
+        } else if (score >= 30) {
+            badges.add(Badges.CODE_NINJA);
+            badges.add(Badges.CODE_CHAMP);      
+            
         } else if (score >= 1) {
             badges.add(Badges.CODE_NINJA);
         }

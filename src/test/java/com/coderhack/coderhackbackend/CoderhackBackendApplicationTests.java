@@ -6,9 +6,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -47,7 +50,7 @@ class CoderhackBackendApplicationTests {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		DocumentContext documentContext = JsonPath.parse(response.getBody());
 
-		String id = documentContext.read("$.id");
+		String id = documentContext.read("$.userId");
 		assertNotNull(id);
 		assertEquals( "66423e742deb7362e70cb065", id);
 
@@ -117,6 +120,46 @@ class CoderhackBackendApplicationTests {
 
 		LOG.info("Added user Details: {}", getResponse.getBody());
 
+	}
+
+	@Test
+	public void testUpdateUserScoreAndBadges() {
+		
+		ResponseEntity<String> getResponse = restTemplate.exchange(
+			"/coderhack/users/664372ddbda8fd04482f8e09?score=45",HttpMethod.PUT, null ,String.class);
+
+		int newScore = 45;
+
+		DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
+
+		String id = documentContext.read("$.userId");
+		assertNotNull(id);
+		assertEquals( "664372ddbda8fd04482f8e09", id);
+
+		String userName = documentContext.read("$.userName");
+		assertEquals( "m@Singh", userName);
+
+		List<String> badges = documentContext.read("$.badges");
+		
+		int score = documentContext.read("$.score");
+
+		LOG.info("badges {}", badges.get(0));
+
+		assertEquals(List.of("CODE_NINJA", "CODE_CHAMP"), badges);
+		assertEquals(newScore, score);
+		assertTrue(badges.contains("CODE_NINJA"));
+		assertTrue(badges.contains("CODE_CHAMP"));
+	}
+
+	@Test
+	void deleteUserById(){
+        String userId = "664372c6a4bf7774c28e9765";
+		ResponseEntity<String> response = restTemplate.exchange("/coderhack/users/{userId}", HttpMethod.DELETE, null,
+				String.class, userId);
+		LOG.info("Response: {}", response.getBody());
+
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		assertEquals("Deleted user with Id: " + userId, response.getBody());
 	}
 
 

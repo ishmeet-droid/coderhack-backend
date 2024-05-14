@@ -84,12 +84,12 @@ public class CoderHackController {
     }
 
     @DeleteMapping("/{userId}")
-    public void deleteUser(@PathVariable String userId) {
+    public ResponseEntity<String> deleteUser(@PathVariable String userId) {
+        LOG.info("userId: {}", userId);
         userService.deleteUser(userId);
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new String("Deleted user with Id: "+ userId));
     }
 
-    
-    
-    
-    
+
 }
