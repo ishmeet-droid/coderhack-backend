@@ -79,7 +79,7 @@ class CoderhackBackendApplicationTests {
 	}
 
 	@Test
-	void shouldReturnAllRegisteredUsers(){
+	void shouldReturnAllRegisteredUsersBasedOnScores(){
 
 		ResponseEntity<String> response = restTemplate.getForEntity("/coderhack/users", String.class);
 		LOG.info("Response: {}", response.getBody());
@@ -96,8 +96,11 @@ class CoderhackBackendApplicationTests {
 
 		Set<Badges> badge1 = new HashSet<>();
         badge1.add(Badges.CODE_CHAMP);
+		badge1.add(Badges.CODE_CHAMP);
+		badge1.add(Badges.CODE_MASTER);
+		
 
-		User user = new User(null, "m@Singh", 50.00, badge1);
+		User user = new User("m@Singh");
 
 		ResponseEntity<Void> createResponse = restTemplate.postForEntity(
 				"/coderhack/users", user, Void.class);
@@ -112,6 +115,7 @@ class CoderhackBackendApplicationTests {
 
 		assertEquals(HttpStatus.OK, getResponse.getStatusCode());
 
+		LOG.info("Added user Details: {}", getResponse.getBody());
 
 	}
 

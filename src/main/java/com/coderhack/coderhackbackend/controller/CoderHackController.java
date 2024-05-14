@@ -8,6 +8,7 @@ import com.coderhack.coderhackbackend.exceptions.UserNotFoundException;
 import com.coderhack.coderhackbackend.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.net.URI;
 import java.util.List;
@@ -38,7 +39,7 @@ public class CoderHackController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<User>> getAllUsersBasedOnScores() {
 
         try {
             return ResponseEntity.ok(userService.getRegisteredUsers());
@@ -72,21 +73,19 @@ public class CoderHackController {
         User savedUser = userService.registerNewUser(newUserRequest);
         URI locationOfNewUser = ucb
                 .path("/coderhack/users/{id}")
-                .buildAndExpand(savedUser.id()).toUri();
+                .buildAndExpand(savedUser.getUserId()).toUri();
         return ResponseEntity.created(locationOfNewUser).build();
 
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<?> updateUserDetails(@PathVariable String userId, @RequestBody User user) {
-     
-        return null;
+    public User updateUserScore(@PathVariable String userId, @RequestParam int score) {
+        return userService.updateUserScore(userId, score);
     }
 
-    @DeleteMapping("/{userid}")
-    public ResponseEntity<?> removeUserFromContest(@PathVariable String userId) {
-     
-        return null;
+    @DeleteMapping("/{userId}")
+    public void deleteUser(@PathVariable String userId) {
+        userService.deleteUser(userId);
     }
 
     
